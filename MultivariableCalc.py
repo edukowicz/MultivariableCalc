@@ -55,6 +55,14 @@ def unit_vector(vector):
     return [x / magnitude for x in vector]
 
 
-def create_vector(vector, magnitude):
-    unit = unit_vector(vector)
-    return [magnitude * x for x in unit]
+def vector_magnitude(vector):
+    """
+    Calculates the magnitude (Euclidean norm) of a vector.
+
+    Args:
+        vector (list or tuple of numbers): The input vector.
+
+    Returns:
+        float: The magnitude of the vector.
+    """
+    return math.sqrt(sum(x**2 for x in vector))
