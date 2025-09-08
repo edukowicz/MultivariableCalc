@@ -1,21 +1,14 @@
 import math
 
+
+#funtion "vector_operation" takes in two vectors -- a and b -- and an operation "add" or "subtract"
 def vector_operation(vec1, vec2, operation):
-    """
-    Performs addition or subtraction on two input vectors (lists or arrays).
-    
-    Parameters:
-        vec1 (list): First vector.
-        vec2 (list): Second vector.
-        operation (str): Either "addition" or "subtraction".
-        
-    Returns:
-        list: Resulting vector after the operation, or
-        str: Error message if vector lengths do not match or operation is invalid.
-    """
+ 
+    #returns an error message if the lengths of the array representing the vectors are not equal
     if len(vec1) != len(vec2):
         return "Error: Vector lengths do not match."
     
+    #returns resulting vectors after the operation, or an error message if the operation parameter is not valid
     if operation == "addition":
         return [a + b for a, b in zip(vec1, vec2)]
     elif operation == "subtraction":
@@ -24,45 +17,31 @@ def vector_operation(vec1, vec2, operation):
         return "Error: Invalid operation. Use 'addition' or 'subtraction'."
     
 
+#function "scalar_multiply" takes in a vector and a scalar value
 def scalar_multiply(vector, scalar):
-    """
-    Multiplies each element of the input vector by the scalar value.
-    
-    Parameters:
-        vector (list): The input vector (list of numbers).
-        scalar (float or int): The scalar value to multiply.
-        
-    Returns:
-        list: The resulting vector after multiplication.
-    """
+ 
+    #multiples each element of the vector by the scalar value
+    #returns the resulting vector after multiplication
     return [scalar * x for x in vector]
 
 
+#function "unit_vector" takes in one vector
 def unit_vector(vector):
-    """
-    Returns the unit vector (normalized vector) of the input vector.
-    
-    Parameters:
-        vector (list): The input vector (list of numbers).
-        
-    Returns:
-        list: The unit vector, or
-        str: Error message if the vector has zero magnitude.
-    """
+   
+    #set variable "magnitude" as the magnitude of input vector
+    #return an error message if the magnitude is zero
     magnitude = math.sqrt(sum(x**2 for x in vector))
     if magnitude == 0:
         return "Error: Zero vector cannot be normalized."
+    
+    #divides each elements of the input vector by the vector's magnitude
+    #returns the unit vector of the input vector
     return [x / magnitude for x in vector]
 
 
+#function "vector_magnitude" takes in a vector
 def vector_magnitude(vector):
-    """
-    Calculates the magnitude (Euclidean norm) of a vector.
-
-    Args:
-        vector (list or tuple of numbers): The input vector.
-
-    Returns:
-        float: The magnitude of the vector.
-    """
+   
+    #calculates magnitude of input vector
+    #returns the magnitude
     return math.sqrt(sum(x**2 for x in vector))
