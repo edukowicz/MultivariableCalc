@@ -1,4 +1,5 @@
 import MultivariableCalc as calc
+import math
 
 "Page 802, Problem #11"
 u = [3, 0, -1]
@@ -26,3 +27,43 @@ b = calc.scalar_multiply(calc.unit_vector([6, -4, 2]), -1)
 print(b)
 c = calc.unit_vector(calc.vector_operation([3,1,1], [-1, 0, 2], "subtraction"))
 print(c)
+
+
+
+
+
+"Page 874, Problem #11"
+r =[]
+s =[]
+r.append(calc.derivative_as_string("x", "x"))
+r.append(calc.derivative_as_string("x**2", "x"))
+for i in range(len(r)):
+    s.append(calc.evaluate_expression_at_value(r[i], 2))
+print(s)
+
+"Page 874, Problem #13"
+r =[]
+s =[]
+r.append(calc.derivative_as_string("sec(x)", "x"))
+r.append(calc.derivative_as_string("tan(x)", "x"))
+for i in range(len(r)):
+    s.append(calc.evaluate_expression_at_value(r[i], 0))
+print(s)
+
+"Page 874, Problem #15"
+r =[]
+s =[]
+r.append(calc.derivative_as_string("2*sin(x)", "x"))
+r.append(calc.derivative_as_string("1", "x"))
+r.append(calc.derivative_as_string("2*cos(x)", "x"))
+for i in range(len(r)):
+    s.append(calc.evaluate_expression_at_value(r[i], (math.pi)/2))
+print(s)
+
+"Page 874, Problem #31"
+r =[]
+r.append(calc.antiderivative_as_string("3", "x"))
+r.append(calc.antiderivative_as_string("4*x", "x"))
+print(r)
+
+
