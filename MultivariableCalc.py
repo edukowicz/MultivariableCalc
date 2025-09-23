@@ -100,7 +100,7 @@ def definite_integral_as_string(expr_str, lower, upper, var='x'):
         str: The string of the definite integral result.
     """
     x = sympy.symbols(var)
-    expr = sympy.ympify(expr_str)
+    expr = sympy.sympify(expr_str)
     definite_integral = sympy.integrate(expr, (x, lower, upper))
     return str(definite_integral)
 
