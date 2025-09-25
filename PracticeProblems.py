@@ -101,36 +101,3 @@ r.append(calc.definite_integral_as_string("t**0.5", 1, 9, "t"))
 r.append(calc.definite_integral_as_string("t**(-0.5)", 1, 9, "t"))
 print("Page 874, Problem #41: ")
 print(r)
-
-
-"Page 910, Problem #1"
-r = ["3*cos(t)", "3*sin(t)"]
-v = [calc.derivative_as_string(r[0], "t"), calc.derivative_as_string(r[1], "t")]
-a = [calc.derivative_as_string(v[0], "t"), calc.derivative_as_string(v[1], "t")]
-vx = [calc.evaluate_expression_at_value(v[0], math.pi/3, "t"), calc.evaluate_expression_at_value(v[1], math.pi/3, "t")]
-ax = [calc.evaluate_expression_at_value(a[0], math.pi/3, "t"), calc.evaluate_expression_at_value(a[1], math.pi/3, "t")]
-print("Page 910, Problem #1: ")
-print(vx)
-print(ax)
-
-
-"Page 910, Problem #5"
-r = ["t", "0.5*t**2", "t**3/3"]
-v = [calc.derivative_as_string(r[0], "t"), calc.derivative_as_string(r[1], "t"), calc.derivative_as_string(r[2], "t")]
-a = [calc.derivative_as_string(v[0], "t"), calc.derivative_as_string(v[1], "t"), calc.derivative_as_string(v[2], "t")]
-vx = [calc.evaluate_expression_at_value(v[0], 1, "t"), calc.evaluate_expression_at_value(v[1], 1, "t"), calc.evaluate_expression_at_value(v[2], 1, "t")]
-ax = [calc.evaluate_expression_at_value(a[0], 1, "t"), calc.evaluate_expression_at_value(a[1], 1, "t"), calc.evaluate_expression_at_value(a[2], 1, "t")]
-print("Page 910, Problem #5: ")
-print(str(vx))
-print(str(ax))
-
-
-"Page 910, Problem #7"
-r = ["2*cos(t)", "2*sin(t)", "t"]
-v = [calc.derivative_as_string(r[0], "t"), calc.derivative_as_string(r[1], "t"), calc.derivative_as_string(r[2], "t")]
-a = [calc.derivative_as_string(v[0], "t"), calc.derivative_as_string(v[1], "t"), calc.derivative_as_string(v[2], "t")]
-vx = [calc.evaluate_expression_at_value(v[0], math.pi/4, "t"), calc.evaluate_expression_at_value(v[1], math.pi/4, "t"), calc.evaluate_expression_at_value(v[2], math.pi/4, "t")]
-ax = [calc.evaluate_expression_at_value(a[0], math.pi/4, "t"), calc.evaluate_expression_at_value(a[1], math.pi/4, "t"), calc.evaluate_expression_at_value(a[2], math.pi/4, "t")]
-print("Page 910, Problem #7: ")
-print(str(vx))
-print(str(ax))
