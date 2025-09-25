@@ -122,3 +122,54 @@ def evaluate_expression_at_value(expr_str, value, var='x'):
     expr = sympy.sympify(expr_str)
     result = expr.subs(x, value)
     return float(result)
+
+ 
+
+def mv_function_integral(expr_list, var_list, int_var): 
+    """ 
+    Computes the symbolic integral of a function with respect to a variable. 
+    Args: 
+        expr_list (list of str): The function as a string, e.g., ["x**2 + y*x","sin(x)*y"]. 
+        var_list (list of str): List of variable names, e.g., ["x", "y"]. 
+        int_var (str): The variable to integrate with respect to, e.g., "x". 
+    Returns: 
+        sympy expression: The symbolic integral. 
+    example: 
+        integral = function_integral(["x**2 + y*x","sin(x)*y"], ["x", "y"], "x") 
+        for integ in integral 
+            print(integ) # Output: x**3/3 + y*x**2/2, -y*cos(x) 
+    """ 
+    variables = sympy.symbols(var_list) 
+    integrals = [] 
+    for expr_str in expr_list: 
+        expr = sympy.sympify(expr_str) 
+        integral = sympy.integrate(expr, sympy.Symbol(int_var)) 
+        integrals.append(integral) 
+    return integrals 
+
+
+
+def mv_function_definite_integral(expr_list, var_list, int_var, lower_limit, upper_limit): 
+    """ 
+    Computes the definite integral of a function with respect to a variable over given limits. 
+    Args: 
+        expr_list (list of str): The function as a string, e.g., ["x**2 + y*x","sin(x)*y"]. 
+        var_list (list of str): List of variable names, e.g., ["x", "y"]. 
+        int_var (str): The variable to integrate with respect to, e.g., "x". 
+        lower_limit (float): The lower limit of integration. 
+        upper_limit (float): The upper limit of integration. 
+    Returns: 
+        float: The evaluated definite integral. 
+    example: 
+        result = function_definite_integral(["x**2 + y*x","sin(x)*y"], ["x", "y"], "x", 0, 1) 
+        print(result) # Output: 1/3 + y/2, -y*cos(1) - y 
+    """ 
+    variables = sympy.symbols(var_list) 
+    definite_integrals = [] 
+    for expr_str in expr_list: 
+        expr = sympy.sympify(expr_str) 
+        definite_integral = sympy.integrate(expr, (sympy.Symbol(int_var), lower_limit, upper_limit)) 
+        definite_integrals.append(definite_integral.evalf()) 
+    return definite_integrals 
+
+  
