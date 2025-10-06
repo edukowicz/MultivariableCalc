@@ -172,4 +172,10 @@ def mv_function_definite_integral(expr_list, var_list, int_var, lower_limit, upp
         definite_integrals.append(definite_integral.evalf()) 
     return definite_integrals 
 
+
+def dot_product(vec1, vec2):
+    if len(vec1) != len(vec2):
+        raise ValueError("Vectors must be the same length")
+    return sum(a * b for a, b in zip(vec1, vec2))
+
   
