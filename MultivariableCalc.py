@@ -178,4 +178,14 @@ def dot_product(vec1, vec2):
         raise ValueError("Vectors must be the same length")
     return sum(a * b for a, b in zip(vec1, vec2))
 
-  
+
+def cross_product(vec1, vec2):
+    if len(vec1) != 3 or len(vec2) != 3:
+        raise ValueError("Both vectors must be of length 3.")
+    x1, y1, z1 = vec1
+    x2, y2, z2 = vec2
+    return [
+        y1 * z2 - z1 * y2,
+        z1 * x2 - x1 * z2,
+        x1 * y2 - y1 * x2
+    ]
