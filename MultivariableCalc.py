@@ -189,3 +189,74 @@ def cross_product(vec1, vec2):
         z1 * x2 - x1 * z2,
         x1 * y2 - y1 * x2
     ]
+
+def symbolic_vector_magnitude(vector, var_name='x'):
+    """
+    Calculates the magnitude of a vector whose components are equations in a variable.
+
+    Args:
+        vector (list of str): Components as strings, e.g. ["x+1", "2*x"]
+        var_name (str): The variable used in the equations, default is 'x'.
+
+    Returns:
+        sympy expression: Symbolic magnitude (can be further evaluated).
+    """
+    var = sympy.symbols(var_name)
+    comp_exprs = [sympy.sympify(comp) for comp in vector]
+    magnitude = sympy.sqrt(sum(comp**2 for comp in comp_exprs))
+    return magnitude
+
+def vector_derivative(vector_func, var):
+    x = sympy.symbols(var)
+    derivatives = []
+    for func_str in vector_func:
+        func = sympy.sympify(func_str)       # Convert string to sympy expression
+        deriv = sympy.diff(func, x)          # Differentiate with respect to var
+        derivatives.append(str(deriv)) # Convert back to string
+    return derivatives
+
+def unit_tangent_vector(vector_valued_function):
+    # Compute the derivative of the vector valued function
+    derivative = vector_derivative(vector_valued_function, "t")
+    # Compute the magnitude of the derivative
+    magnitude = symbolic_vector_magnitude(derivative)
+    # Compute the unit tangent vector
+    unit_tangent = [f"({component})/({magnitude})" for component in derivative]
+    return unit_tangent
+
+def mv_evaluate_expression_at_value(expr_str, value, var='x'):
+    """
+    Takes a string representing a mathematical expression and a value,
+    returns the result of evaluating the expression at that value.
+
+    Args:
+        expr_str (str): The mathematical expression, e.g., "x**2 + 1".
+        value (float or int): The value at which to evaluate the expression.
+        var (str): The variable in the expression. Default is 'x'.
+
+    Returns:
+        float: The result of the evaluated expression at the given value.
+    """
+    x = sympy.symbols(var)
+    result = []
+    for i in range(len(expr_str)):
+        expr = sympy.sympify(expr_str[i])
+        result.append(expr.subs(x, value))
+    return result
+
+
+def cross_product_str_to_str(vec1: list[str], vec2: list[str]) -> list[str]:
+    if len(vec1) != 3 or len(vec2) != 3:
+        raise ValueError("Both input vectors must have exactly 3 components.")
+
+    # Convert input strings to sympy expressions
+    v1 = [sympy.sympify(e) for e in vec1]
+    v2 = [sympy.sympify(e) for e in vec2]
+
+    # Cross product
+    cp_x = v1[1]*v2[2] - v1[2]*v2[1]
+    cp_y = v1[2]*v2[0] - v1[0]*v2[2]
+    cp_z = v1[0]*v2[1] - v1[1]*v2[0]
+
+    # Convert result back to strings
+    return [str(cp_x), str(cp_y), str(cp_z)]
