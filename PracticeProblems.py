@@ -1,6 +1,8 @@
 import MultivariableCalc as calc
 import math
 
+#Unit 1.A Practice Problems
+
 "Page 802, Problem #11"
 u = [3, 0, -1]
 v = [1, -1, 2]
@@ -101,3 +103,104 @@ r.append(calc.definite_integral_as_string("t**0.5", 1, 9, "t"))
 r.append(calc.definite_integral_as_string("t**(-0.5)", 1, 9, "t"))
 print("Page 874, Problem #41: ")
 print(r)
+
+
+
+
+
+#Unit 1.B Practice Problems
+
+"Page 810, Problem #1"
+print("Page 810, Problem #1: ")
+
+u = [1, 2]
+v = [6, -8]
+a = calc.dot_product(u, v)
+cosa = a/(calc.vector_magnitude(u)*calc.vector_magnitude(v))
+print(a)
+print(cosa)
+
+u = [-7, -3]
+v = [0, 1]
+b = calc.dot_product(u, v)
+cosb = b/(calc.vector_magnitude(u)*calc.vector_magnitude(v))
+print(b)
+print(cosb)
+
+u = [1, -3, 7]
+v = [8, -2, -2]
+c = calc.dot_product(u, v)
+cosc = c/(calc.vector_magnitude(u)*calc.vector_magnitude(v))
+print(c)
+print(cosc)
+
+u = [1, -3, 7]
+v = [8, -2, -2]
+d = calc.dot_product(u, v)
+cosd = c/(calc.vector_magnitude(u)*calc.vector_magnitude(v))
+print(d)
+print(cosd)
+
+
+"Page 810, Problem #35"
+f = [4, -6, 1]
+d = 15 * calc.unit_vector([1, 1, 1])
+work = calc.dot_product(f, d)
+print("Page 810, Problem #35: ")
+print(work)
+
+
+"Page 810, Problem #38"
+xn = 250 * math.cos(math.radians(38))
+yn = 250 * math.sin(math.radians(38))
+unknownY = -1 * yn
+unknownX = 1000 - xn
+force = [unknownX, unknownY]
+forceMag = calc.vector_magnitude(force)
+angle = math.atan(unknownY/unknownX)
+print("Page 810, Problem #38: (magnitdue of force, then angle)")
+print(forceMag)
+print(angle)
+
+
+"Page 822, Problem #7"
+print("Page 822, Problem #7: ")
+u = [2, -1, 3]
+v = [0, 1, 7]
+w = [1, 4, 5]
+
+a = calc.cross_product(u, calc.cross_product(v, w))
+print(a)
+
+b = calc.cross_product(calc.cross_product(u, v), w)
+print(b)
+
+c = calc.cross_product(calc.cross_product(u, v), calc.cross_product(v, w))
+print(c)
+
+d = calc.cross_product(calc.cross_product(v, w), calc.cross_product(u, v))
+print(d)
+
+
+"Page 822, Problem #10"
+u = calc.cross_product([-7, 3, 1], [2, 0, 4])
+v = calc.unit_vector(u)
+w = calc.scalar_multiply(v, -1)
+print("Page 822, Problem #10: ")
+print(v)
+print(w)
+
+
+"Page 822, Problem #17"
+u = calc.dot_product([2, -3, 1], calc.cross_product([4, 1, -3], [0, 1, 5]))
+print("Page 822, Problem #17: ")
+print(u)
+
+
+"Page 822, Problem #37"
+f = [200 * math.sin(math.radians(18)), 200 * math.cos(math.radians(18))]
+d = [0.2, 0.03]
+t = calc.vector_magnitude(calc.cross_product(f, d))
+print("Page 822, Problem #37: ")
+print(t)
+
