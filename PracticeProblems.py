@@ -110,7 +110,7 @@ print(r)"""
 
 #Unit 1.B Practice Problems
 
-"Page 810, Problem #1"
+""""Page 810, Problem #1"
 print("Page 810, Problem #1: ")
 
 u = [1, 2]
@@ -255,6 +255,6 @@ r = ["sin(t) - t*cos(t)", "cos(t) + t*sin(t)", "1"]
 tangent = calc.unit_tangent_vector(r)
 normal = calc.unit_tangent_vector(tangent)
 binormal = calc.cross_product_str_to_str(tangent, normal)
-print(binormal)
+print(binormal) """
 
 
