@@ -23,7 +23,7 @@ print(f"e = {e}")
 print()
 
 #find vector for node line
-node = calc.cross_product(hvec, k)
+node = calc.cross_product(k, hvec)
 
 #find angle i
 eqplane = calc.cross_product(node, k)
@@ -41,7 +41,7 @@ print()
 nodedoti = calc.dot_product(node, i)
 nodemag = calc.vector_magnitude(node)
 omegarad = math.acos(nodedoti/nodemag)
-omega = 180 - math.degrees(omegarad)
+omega = math.degrees(omegarad)
 print(f"omega = {omega} degrees")
 print()
 
@@ -57,5 +57,5 @@ print()
 #find angle w
 nodedote = calc.dot_product(node, evec)
 wrad = math.acos(nodedote/(emag*nodemag))
-w = 180 - math.degrees(wrad)
+w = math.degrees(wrad)
 print(f"w = {w} degrees")
