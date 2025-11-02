@@ -260,3 +260,115 @@ print(binormal) """
 
 
 #Unit 1.C Practice Problems
+
+#1
+a = [[2, 3], [4, 5]]
+b = [[1, 2], [3, 4]]
+print("#1")
+print(calc.matrix_operation(a, b, "addition"))
+
+#2
+a = [[5, 1], [2, 4]]
+b = [[3, -2], [1, 0]]
+print("#2")
+print(calc.matrix_operation(a, b, "subtraction"))
+
+#3
+a = [[1, 2, 3], [4, 5, 6]]
+b = [[3, 2, 1], [6, 5, 4]]
+print("#3")
+print(calc.matrix_operation(a, b, "addition"))
+
+#4
+a = [[7, 8], [9, 10]]
+b = [[3, 4], [5, 6]]
+print("#4")
+print(calc.matrix_operation(b, a, "subtraction"))
+
+#5
+a = [[1, 2], [3, 4]]
+b = [[2, 0], [1, 2]]
+print("#5")
+print(calc.matrix_product(a, b))
+
+#6
+a = [[1, 3], [0, 2]]
+b = [[4, 5], [2, 1]]
+print("#6")
+print(calc.matrix_product(a, b))
+
+#7
+a = [[1, 0, 1], [2, 1, 0]]
+b = [[2, 1], [1, 3], [0, 4]]
+print("#7")
+print(calc.matrix_product(a, b))
+
+#8
+a = [[2, -1], [0, 3], [4, 1]]
+b = [[1, 2, 3], [4, 5, 6]]
+print("#8")
+print(calc.matrix_product(a, b))
+
+#9
+a = [[1, 3, 5], [2, 4, 6]]
+print("#9")
+print(calc.transpose_matrix(a))
+
+#10
+b = [[2, -1], [4, 0], [1, 3]]
+print("#10")
+print(calc.transpose_matrix(b))
+
+#11
+a = [[2, 3], [4, 5]]
+print("#11")
+print(calc.determinant_2x2(a))
+
+#12
+a = [[3, 1], [2, 5]]
+print("#12")
+print(calc.determinant_2x2(a))
+
+#13
+a = [[1, 2, 3], [0, 1, 4], [5, 6, 0]]
+print("#13")
+print(calc.determinant_3x3(a))
+
+#14
+b = [[2, 0, 1], [3, 0, 0], [5, 1, 1]]
+print("#14")
+print(calc.determinant_3x3(b))
+
+#15
+a = [[4, 7], [2, 6]]
+print("#15")
+print(calc.inverse_2x2(a))
+
+#16
+b = [[1, 2], [3, 4]]
+print("#16")
+print(calc.inverse_2x2(b))
+
+#17
+a = [[1, 2, 3], [0, 1, 4], [5, 6, 0]]
+print("#17")
+print(calc.inverse_3x3(a))
+
+#18
+b = [[1, 0, 2], [-1, 3, 1], [0, 5, 4]]
+print("#18")
+print(calc.inverse_3x3(b))
+
+#19
+a = [[3, 4], [2, 1]]
+b = [[10], [5]]
+print("#19")
+x = calc.matrix_product(calc.inverse_2x2(a), b)
+print(f"x = {x[0][0]}, y = {x[1][0]}")
+
+#20
+a = [[1, 1, 1], [2, 5, 7], [2, 1, -1]]
+b = [[6], [22], [0]]
+print("#20")
+x = calc.matrix_product(calc.inverse_3x3(a), b)
+print(f"x = {x[0][0]}, y = {x[1][0]}, z = {x[2][0]}")
