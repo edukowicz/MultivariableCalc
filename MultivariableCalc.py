@@ -260,3 +260,129 @@ def cross_product_str_to_str(vec1: list[str], vec2: list[str]) -> list[str]:
 
     # Convert result back to strings
     return [str(cp_x), str(cp_y), str(cp_z)]
+
+
+def matrix_operation(matrix1, matrix2, operation):
+    if not (len(matrix1) == len(matrix2) and all(len(row1) == len(row2) for row1, row2 in zip(matrix1, matrix2))):
+        raise ValueError("Matrices must have the same dimensions.")
+
+    if operation == "addition":
+        return [[a + b for a, b in zip(row1, row2)] for row1, row2 in zip(matrix1, matrix2)]
+    elif operation == "subtraction":
+        return [[a - b for a, b in zip(row1, row2)] for row1, row2 in zip(matrix1, matrix2)]
+    else:
+        raise ValueError("Operation must be 'addition' or 'subtraction'.")
+    
+
+def matrix_product(matrix1, matrix2):
+    n = len(matrix1)
+    m = len(matrix1[0])
+    if not all(len(row) == m for row in matrix1):
+        raise ValueError("All rows in matrix1 must have the same length.")
+    
+    if len(matrix2) == 0 or len(matrix2[0]) == 0:
+        raise ValueError("matrix2 cannot be empty.")
+    
+    p = len(matrix2[0])
+    if not all(len(row) == p for row in matrix2):
+        raise ValueError("All rows in matrix2 must have the same length.")
+
+    if m != len(matrix2):
+        raise ValueError("Number of columns in matrix1 must equal number of rows in matrix2.")
+
+    # Matrix multiplication
+    result = []
+    for i in range(n):
+        result_row = []
+        for j in range(p):
+            total = 0
+            for k in range(m):
+                total += matrix1[i][k] * matrix2[k][j]
+            result_row.append(total)
+        result.append(result_row)
+    return result
+
+
+def transpose_matrix(matrix):
+    if not matrix or not all(isinstance(row, list) for row in matrix):
+        raise ValueError("Input must be a non-empty 2D array (list of lists).")
+    if not all(len(row) == len(matrix[0]) for row in matrix):
+        raise ValueError("All rows in the matrix must have the same length.")
+
+    # Use zip to transpose the matrix
+    return [list(row) for row in zip(*matrix)]
+
+
+def determinant_2x2(matrix):
+    if (
+        not isinstance(matrix, list)
+        or len(matrix) != 2
+        or not all(isinstance(row, list) and len(row) == 2 for row in matrix)
+    ):
+        raise ValueError("Input must be a 2x2 matrix as a 2D array.")
+
+    # For matrix [[a, b], [c, d]], determinant is ad - bc
+    a, b = matrix[0]
+    c, d = matrix[1]
+    return a * d - b * c
+
+
+def determinant_3x3(matrix):
+    if (
+        not isinstance(matrix, list)
+        or len(matrix) != 3
+        or not all(isinstance(row, list) and len(row) == 3 for row in matrix)
+    ):
+        raise ValueError("Input must be a 3x3 matrix as a 2D array.")
+
+    a, b, c = matrix[0]
+    d, e, f = matrix[1]
+    g, h, i = matrix[2]
+
+    # Determinant formula for 3x3 matrix:
+    # |A| = a(ei − fh) − b(di − fg) + c(dh − eg)
+    return a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g)
+
+
+def inverse_2x2(matrix):
+    det = determinant_2x2(matrix)
+    if det == 0:
+        raise ValueError("Matrix is singular and cannot be inverted.")
+
+    a, b = matrix[0]
+    c, d = matrix[1]
+    # Inverse formula: (1/det) * [[d, -b], [-c, a]]
+    return [
+        [d / det, -b / det],
+        [-c / det, a / det]
+    ]
+
+
+def inverse_3x3(matrix):
+    det = determinant_3x3(matrix)
+    if det == 0:
+        raise ValueError("Matrix is singular and cannot be inverted.")
+
+    # Calculate matrix of cofactors
+    cofactors = []
+    for i in range(3):
+        cofactor_row = []
+        for j in range(3):
+            # Create minor by removing i-th row and j-th column
+            minor = [
+                [matrix[x][y] for y in range(3) if y != j]
+                for x in range(3) if x != i
+            ]
+            # Determinant of minor (2x2)
+            minor_det = minor[0][0]*minor[1][1] - minor[0][1]*minor[1][0]
+            # Apply sign
+            sign = (-1) ** (i + j)
+            cofactor_row.append(sign * minor_det)
+        cofactors.append(cofactor_row)
+
+    # Transpose cofactor matrix to get adjugate
+    adjugate = [list(row) for row in zip(*cofactors)]
+
+    # Divide adjugate by determinant
+    inverse = [[adjugate[i][j] / det for j in range(3)] for i in range(3)]
+    return inverse

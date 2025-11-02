@@ -258,3 +258,5 @@ binormal = calc.cross_product_str_to_str(tangent, normal)
 print(binormal) """
 
 
+
+#Unit 1.C Practice Problems
