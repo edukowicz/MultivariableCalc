@@ -1,5 +1,8 @@
 import MultivariableCalc as calc
 import math
+import sympy
+import numpy as np
+import matplotlib.pyplot as plt
 
 #Unit 1.A Practice Problems
 
@@ -373,3 +376,11 @@ print("#20")
 x = calc.matrix_product(calc.inverse_3x3(a), b)
 print(f"x = {x[0][0]}, y = {x[1][0]}, z = {x[2][0]}")
 """
+
+#Unit 2.A Practice Problems
+
+#Page 933, Problem #1
+plot = calc.plot_surface("y*x**2 + 1", (-10, 10), (-10, 10), 100, None)
+plt.savefig('Practice Problem #1')
+plt.close()
+print("saved plot")
