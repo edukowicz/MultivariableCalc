@@ -1,3 +1,4 @@
+"""
 import MultivariableCalc as mvcalc
 import math
 import sympy as sp
@@ -83,3 +84,4 @@ speed = "sqrt((" + str(v[0]) + ")**2 + (" + str(v[1]) + ")**2)"
 d = mvcalc.mv_function_definite_integral([speed], ["t"], "t", 0, 2.9) #using my calculator function 
 #print the total distance travelled by the skier while in the air
 print("The distance travelled is",d[0])  
+"""

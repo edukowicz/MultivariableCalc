@@ -1,5 +1,7 @@
 import math
 import sympy
+import numpy as np
+import matplotlib.pyplot as plt
 
 #funtion "vector_operation" takes in two vectors -- a and b -- and an operation "add" or "subtract"
 def vector_operation(vec1, vec2, operation):
@@ -386,3 +388,236 @@ def inverse_3x3(matrix):
     # Divide adjugate by determinant
     inverse = [[adjugate[i][j] / det for j in range(3)] for i in range(3)]
     return inverse
+
+
+def plot_equation(equation_str, x_range=(-10, 10), num_points=1000, ax=None, **kwargs):
+    #plots the 2D function y=f(x) specified as a string
+    #equation_str (str): The equation as a Python-valid string, e.g., "np.sin(x)".
+    #x_range (tuple): Range for x values, default (-10, 10).
+    #num_points (int): Number of points to plot, default 1000.
+    #ax (matplotlib.axes._axes.Axes or None): If provided, plot on this axes, otherwise create new figure.
+    #**kwargs: Additional keyword arguments passed to matplotlib plot().
+    x = np.linspace(x_range[0], x_range[1], num_points)
+    try:
+        # Provide numpy and x in eval namespace
+        y = eval(equation_str, {"np": np, "x": x})
+    except Exception as e:
+        raise ValueError(f"Error parsing equation: {e}")
+    
+    if ax is None:
+        fig, ax = plt.subplots()
+    
+    ax.plot(x, y, **kwargs)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_title(f'y = {equation_str}')
+    return ax
+
+
+def plot_parametric(x_func_str, y_func_str, t_range=(0, 2*np.pi), num_points=1000, ax=None, **kwargs):
+        #x_func_str (str): x(t) as a Python-valid string, e.g., "np.cos(t)"
+        #y_func_str (str): y(t) as a Python-valid string, e.g., "np.sin(t)"
+        #t_range (tuple): Start and stop for parameter t
+        #num_points (int): Number of t values to generate
+        #ax (matplotlib.axes._axes.Axes or None): An axis to plot on, or None to create a new figure
+        #**kwargs: Additional arguments to matplotlib's plot
+    t = np.linspace(t_range[0], t_range[1], num_points)
+    try:
+        x = eval(x_func_str, {"np": np, "t": t})
+        y = eval(y_func_str, {"np": np, "t": t})
+    except Exception as e:
+        raise ValueError(f"Error parsing equation: {e}")
+
+    if ax is None:
+        fig, ax = plt.subplots()
+        
+    ax.plot(x, y, **kwargs)
+    ax.set_xlabel('x(t)')
+    ax.set_ylabel('y(t)')
+    ax.set_title(f'x(t) = {x_func_str},  y(t) = {y_func_str}')
+    return ax
+
+
+def plot_vector(vector_strs, ax=None, origin=(0, 0), **kwargs):
+    """
+    Plots a 2D vector given as a list of strings ["x_comp", "y_comp"].
+
+    Parameters:
+        vector_strs (list of str): [x-component, y-component] as Python-evaluable strings, e.g., ["3", "2"] or ["np.cos(np.pi/4)", "np.sin(np.pi/4)"]
+        ax (matplotlib.axes._axes.Axes or None): Existing axes or None for new plot.
+        origin (tuple): Starting point of the vector (default (0, 0))
+        **kwargs: Additional arguments passed to matplotlib's quiver.
+    
+    Returns:
+        matplotlib.axes._axes.Axes: The axes object with the plot
+    """
+    try:
+        x_comp = float(eval(vector_strs[0], {"np": np}))
+        y_comp = float(eval(vector_strs[1], {"np": np}))
+    except Exception as e:
+        raise ValueError(f"Error parsing vector components: {e}")
+
+    if ax is None:
+        fig, ax = plt.subplots()
+    
+    ax.quiver(origin[0], origin[1], x_comp, y_comp, angles='xy', scale_units='xy', scale=1, **kwargs)
+    ax.set_xlim(min(origin[0], origin[0] + x_comp) - 1, max(origin[0], origin[0] + x_comp) + 1)
+    ax.set_ylim(min(origin[1], origin[1] + y_comp) - 1, max(origin[1], origin[1] + y_comp) + 1)
+    ax.set_aspect('equal')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_title(f'2D Vector [{vector_strs[0]}, {vector_strs[1]}]')
+    return ax
+
+
+def plot_parametric_3d(x_func_str, y_func_str, z_func_str, t_range=(0, 2*np.pi), num_points=1000, ax=None, **kwargs):
+    """
+    Plots a 3D parametric function defined as x(t), y(t), z(t) where all are strings.
+
+    Parameters:
+        x_func_str (str): x(t) as a Python-valid string, e.g., "np.cos(t)"
+        y_func_str (str): y(t) as a Python-valid string, e.g., "np.sin(t)"
+        z_func_str (str): z(t) as a Python-valid string, e.g., "t"
+        t_range (tuple): Range for t parameter (default (0, 2*pi))
+        num_points (int): Number of t values (default 1000)
+        ax (mpl_toolkits.mplot3d.Axes3D or None): Plot on existing axes or create new
+        **kwargs: Additional keyword args to pass to ax.plot
+
+    Returns:
+        mpl_toolkits.mplot3d.Axes3D: The axes object with the plot
+    """
+
+    t = np.linspace(t_range[0], t_range[1], num_points)
+    try:
+        x = eval(x_func_str, {"np": np, "t": t})
+        y = eval(y_func_str, {"np": np, "t": t})
+        z = eval(z_func_str, {"np": np, "t": t})
+    except Exception as e:
+        raise ValueError(f"Error parsing equation: {e}")
+
+    if ax is None:
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+
+    ax.plot(x, y, z, **kwargs)
+    ax.set_xlabel('x(t)')
+    ax.set_ylabel('y(t)')
+    ax.set_zlabel('z(t)')
+    ax.set_title(f"x(t)={x_func_str}, y(t)={y_func_str}, z(t)={z_func_str}")
+    return ax
+
+
+def plot_surface(equation_str, x_range=(-5, 5), y_range=(-5, 5), num_points=100, ax=None, **kwargs):
+    """
+    Plots the 3D surface defined by z = f(x, y) where f is a string expression.
+
+    Parameters:
+        equation_str (str): Equation in terms of 'x' and 'y', e.g., "np.sin(np.sqrt(x**2 + y**2))"
+        x_range (tuple): Range for x values
+        y_range (tuple): Range for y values
+        num_points (int): Resolution of the meshgrid (default 100)
+        ax (mpl_toolkits.mplot3d.Axes3D or None): Axes to plot on, or None for a new plot
+        **kwargs: Additional arguments to pass to ax.plot_surface
+
+    Returns:
+        mpl_toolkits.mplot3d.Axes3D: The axes object with the plot
+    """
+    x = np.linspace(x_range[0], x_range[1], num_points)
+    y = np.linspace(y_range[0], y_range[1], num_points)
+    X, Y = np.meshgrid(x, y)
+    try:
+        Z = eval(equation_str, {"np": np, "x": X, "y": Y})
+    except Exception as e:
+        raise ValueError(f"Error parsing equation: {e}")
+
+    if ax is None:
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+
+    surf = ax.plot_surface(X, Y, Z, **kwargs)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
+    ax.set_title(f"z = {equation_str}")
+    return ax
+
+
+def plot_vector_3d(vector_strs, ax=None, origin=(0, 0, 0), **kwargs):
+    """
+    Plots a 3D vector given as a list of strings ["x_comp", "y_comp", "z_comp"].
+
+    Parameters:
+        vector_strs (list of str): [x, y, z] components as strings, e.g. ["1", "2", "3"] or ["np.cos(np.pi/4)", "np.sin(np.pi/4)", "3"]
+        ax (mpl_toolkits.mplot3d.Axes3D or None): Plot on existing axes or create new
+        origin (tuple): Starting point of the vector (default (0, 0, 0))
+        **kwargs: Additional keyword arguments passed to matplotlib's quiver
+
+    Returns:
+        mpl_toolkits.mplot3d.Axes3D: The axes object with the plot
+    """
+    try:
+        x_comp = float(eval(vector_strs[0], {"np": np}))
+        y_comp = float(eval(vector_strs[1], {"np": np}))
+        z_comp = float(eval(vector_strs[2], {"np": np}))
+    except Exception as e:
+        raise ValueError(f"Error parsing vector components: {e}")
+
+    if ax is None:
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+
+    ax.quiver(
+        origin[0], origin[1], origin[2],
+        x_comp, y_comp, z_comp,
+        length=1, normalize=False, **kwargs
+    )
+
+    x_max = max(origin[0], origin[0] + x_comp)
+    x_min = min(origin[0], origin[0] + x_comp)
+    y_max = max(origin[1], origin[1] + y_comp)
+    y_min = min(origin[1], origin[1] + y_comp)
+    z_max = max(origin[2], origin[2] + z_comp)
+    z_min = min(origin[2], origin[2] + z_comp)
+    ax.set_xlim(x_min - 1, x_max + 1)
+    ax.set_ylim(y_min - 1, y_max + 1)
+    ax.set_zlim(z_min - 1, z_max + 1)
+    ax.set_xlabel("x")
+    ax.set_ylabel("y")
+    ax.set_zlabel("z")
+    ax.set_title(f'3D Vector [{vector_strs[0]}, {vector_strs[1]}, {vector_strs[2]}]')
+    return ax
+
+
+def plot_contour(equation_str, x_range=(-5, 5), y_range=(-5, 5), num_points=200, ax=None, **kwargs):
+    """
+    Plots the contour lines of the 3D surface defined by z = f(x, y) as a 2D plot.
+
+    Parameters:
+        equation_str (str): Equation in terms of 'x' and 'y', e.g., "np.sin(np.sqrt(x**2 + y**2))"
+        x_range (tuple): Range for x values (default (-5, 5))
+        y_range (tuple): Range for y values (default (-5, 5))
+        num_points (int): Resolution of grid (default 200)
+        ax (matplotlib.axes.Axes or None): Axes to plot on, or None for a new plot
+        **kwargs: Additional kwargs for matplotlib's contour/contourf
+
+    Returns:
+        matplotlib.axes.Axes: The axes object with the plot
+    """
+    x = np.linspace(x_range[0], x_range[1], num_points)
+    y = np.linspace(y_range[0], y_range[1], num_points)
+    X, Y = np.meshgrid(x, y)
+    try:
+        Z = eval(equation_str, {"np": np, "x": X, "y": Y})
+    except Exception as e:
+        raise ValueError(f"Error parsing equation: {e}")
+
+    if ax is None:
+        fig, ax = plt.subplots()
+
+    # 'contourf' for filled, 'contour' for lines
+    contour = ax.contour(X, Y, Z, **kwargs)
+    ax.clabel(contour, inline=True, fontsize=8)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_title(f"Contours of z = {equation_str}")
+    return ax

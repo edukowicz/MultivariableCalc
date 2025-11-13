@@ -258,7 +258,7 @@ binormal = calc.cross_product_str_to_str(tangent, normal)
 print(binormal) """
 
 
-
+"""
 #Unit 1.C Practice Problems
 
 #1
@@ -372,3 +372,4 @@ b = [[6], [22], [0]]
 print("#20")
 x = calc.matrix_product(calc.inverse_3x3(a), b)
 print(f"x = {x[0][0]}, y = {x[1][0]}, z = {x[2][0]}")
+"""
