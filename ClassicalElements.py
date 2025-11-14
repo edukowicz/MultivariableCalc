@@ -67,4 +67,4 @@ def angleW(r, v):
     wrad = math.acos(nodedote/(emag*nodemag))
     w = math.degrees(wrad)
     return w
-    """
+"""    

@@ -226,7 +226,7 @@ def unit_tangent_vector(vector_valued_function):
     unit_tangent = [f"({component})/({magnitude})" for component in derivative]
     return unit_tangent
 
-def mv_evaluate_expression_at_value(expr_str, value, var='x'):
+def vector_evaluate_expression_at_value(expr_str, value, var='x'):
     """
     Takes a string representing a mathematical expression and a value,
     returns the result of evaluating the expression at that value.
@@ -621,3 +621,40 @@ def plot_contour(equation_str, x_range=(-5, 5), y_range=(-5, 5), num_points=200,
     ax.set_ylabel('y')
     ax.set_title(f"Contours of z = {equation_str}")
     return ax
+
+
+def evaluate_expression_at_values(expr_str, values):
+    """
+    Takes a string representing a mathematical expression and a dict of values,
+    returns the result of evaluating the expression at those variable values.
+
+    Args:
+        expr_str (str): The mathematical expression, e.g., "x**2 + y".
+        values (dict): Mapping of variable names to their values, e.g., {'x': 2, 'y': 3}.
+
+    Returns:
+        float: The result of the evaluated expression at the given values.
+    """
+    # Parse the expression into sympy
+    expr = sympy.sympify(expr_str)
+    # Substitute the provided variable values into the expression
+    result = expr.subs(values)
+    return float(result)
+
+
+def partial_derivative_as_string(expr_str, var='x'):
+    """
+    Takes a string representing a mathematical expression and returns
+    a string representing its partial derivative with respect to the specified variable.
+
+    Args:
+        expr_str (str): The mathematical expression (e.g., "sin(x*y) + x**2").
+        var (str): The variable to differentiate with respect to. Default is 'x'.
+
+    Returns:
+        str: The string of the partial derivative.
+    """
+    symbols = sympy.symbols(var)
+    expr = sympy.sympify(expr_str)
+    deriv = sympy.diff(expr, symbols)
+    return str(deriv)

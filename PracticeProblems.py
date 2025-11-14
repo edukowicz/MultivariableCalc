@@ -212,10 +212,10 @@ print(t)
 print("Page 891, Problem #5: ")
 r = ["t**2 -1", "t", 0]
 tangent = calc.unit_tangent_vector(r)
-tangentnum = calc.mv_evaluate_expression_at_value(tangent, 1, "t")
+tangentnum = calc.vector_evaluate_expression_at_value(tangent, 1, "t")
 print(tangentnum)
 normal = calc.unit_tangent_vector(tangent)
-normalnum = calc.mv_evaluate_expression_at_value(normal, 1, "t")
+normalnum = calc.vector_evaluate_expression_at_value(normal, 1, "t")
 print(normalnum)
 
 
@@ -223,10 +223,10 @@ print(normalnum)
 print("Page 891, Problem #9: ")
 r = ["4*cos(t)", "4*sin(t)", "t"]
 tangent = calc.unit_tangent_vector(r)
-tangentnum = calc.mv_evaluate_expression_at_value(tangent, (math.pi)/2, "t")
+tangentnum = calc.vector_evaluate_expression_at_value(tangent, (math.pi)/2, "t")
 print(tangentnum)
 normal = calc.unit_tangent_vector(tangent)
-normalnum = calc.mv_evaluate_expression_at_value(normal, (math.pi)/2, "t")
+normalnum = calc.vector_evaluate_expression_at_value(normal, (math.pi)/2, "t")
 print(normalnum)
 
 
@@ -234,11 +234,11 @@ print(normalnum)
 print("Page 891, Problem #11: ")
 r = ["cos(t)*e**t", "sin(t)*e**t", "e**t"]
 tangent = calc.unit_tangent_vector(r)
-tangentnum = calc.mv_evaluate_expression_at_value(tangent, 0, "t")
+tangentnum = calc.vector_evaluate_expression_at_value(tangent, 0, "t")
 print(tangentnum)
 print()
 normal = calc.unit_tangent_vector(tangent)
-normalnum = calc.mv_evaluate_expression_at_value(normal, 0, "t")
+normalnum = calc.vector_evaluate_expression_at_value(normal, 0, "t")
 print(normalnum)
 print()
 
@@ -384,3 +384,4 @@ plot = calc.plot_surface("y*x**2 + 1", (-10, 10), (-10, 10), 100, None)
 plt.savefig('Practice Problem #1')
 plt.close()
 print("saved plot")
+
