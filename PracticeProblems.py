@@ -380,8 +380,39 @@ print(f"x = {x[0][0]}, y = {x[1][0]}, z = {x[2][0]}")
 #Unit 2.A Practice Problems
 
 #Page 933, Problem #1
+print("Page 933, Problem #1")
 plot = calc.plot_surface("y*x**2 + 1", (-10, 10), (-10, 10), 100, None)
-plt.savefig('Practice Problem #1')
+plt.savefig('Page 993, Problem #1')
 plt.close()
-print("saved plot")
+print("Saved plot")
+
+a = calc.evaluate_expression_at_values("y*x**2+1", {'x':2, 'y':1})
+print(a)
+
+b = calc.evaluate_expression_at_values("y*x**2+1", {'x':1, 'y':2})
+print(b)
+
+c = calc.evaluate_expression_at_values("y*x**2+1", {'x':0, 'y':0})
+print(c)
+
+d = calc.evaluate_expression_at_values("y*x**2+1", {'x':1, 'y':-2})
+print(d)
+
+#Page 933, Problem #13
+print("Page 933, Problem #13")
+
+a = calc.evaluate_expression_at_values("x*y**2*z**3 + 3", {'x':2, 'y':1, 'z':2})
+print(a)
+
+b = calc.evaluate_expression_at_values("x*y**2*z**3 + 3", {'x':-3, 'y':2, 'z':1})
+print(b)
+
+c = calc.evaluate_expression_at_values("x*y**2*z**3 + 3", {'x':0, 'y':0, 'z':0})
+print(c)
+
+#Page 933, Problem #17
+print("Page 933, Problem #17")
+
+a = calc.evaluate_expression_at_values("x**2*y**3*(z+t)**0.5", {'x':math.sqrt(5), 'y':2, 'z':math.pi,'t':3*math.pi})
+print(a)
 
