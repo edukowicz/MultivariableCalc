@@ -395,7 +395,7 @@ print(b)
 c = calc.evaluate_expression_at_values("y*x**2+1", {'x':0, 'y':0})
 print(c)
 
-d = calc.evaluate_expression_at_values("y*x**2+1", {'x':1, 'y':-2})
+d = calc.evaluate_expression_at_values("y*x**2+1", {'x':1, 'y':-3})
 print(d)
 
 #Page 933, Problem #13
@@ -416,3 +416,41 @@ print("Page 933, Problem #17")
 a = calc.evaluate_expression_at_values("x**2*y**3*(z+t)**0.5", {'x':math.sqrt(5), 'y':2, 'z':math.pi,'t':3*math.pi})
 print(a)
 
+#Page 933, Problem #35
+print("Page 933, Problem #35")
+
+a = calc.plot_contour("1-x**2-y**2", (-2, 2), (-2, 2), 200, None)
+plt.savefig('Page 993, Problem #35a')
+plt.close()
+print("Saved plot")
+
+b = calc.plot_contour("(x**2+y**2)**0.5", (-2, 2), (-2, 2), 200, None)
+plt.savefig('Page 993, Problem #35b')
+plt.close()
+print("Saved plot")
+
+c = calc.plot_contour("x**2+y**2", (-2, 2), (-2, 2), 200, None)
+plt.savefig('Page 993, Problem #35c')
+plt.close()
+print("Saved plot")
+
+#Page 933, Problem #57
+print("Page 933, Problem #57")
+
+a = calc.plot_surface("x*y", (-2, 2), (-2, 2), 100, None)
+plt.savefig('Page 993, Problem #57a')
+plt.close()
+print("Saved plot")
+
+b = calc.plot_contour("x*y", (0, 5), (0, 5), 200, None)
+plt.savefig('Page 993, Problem #57b')
+plt.close()
+print("Saved plot")
+
+#Page 933, Problem #58
+print("Page 933, Problem #58")
+
+a = calc.plot_contour("8/((16+x**2+y**2)**0.5)", (-2, 2), (-2, 2), 200, None)
+plt.savefig('Page 993, Problem #58')
+plt.close()
+print("Saved plot")
