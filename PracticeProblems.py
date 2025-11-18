@@ -377,6 +377,7 @@ x = calc.matrix_product(calc.inverse_3x3(a), b)
 print(f"x = {x[0][0]}, y = {x[1][0]}, z = {x[2][0]}")
 """
 
+"""
 #Unit 2.A Practice Problems
 
 #Page 933, Problem #1
@@ -454,3 +455,6 @@ a = calc.plot_contour("8/((16+x**2+y**2)**0.5)", (-2, 2), (-2, 2), 200, None)
 plt.savefig('Page 993, Problem #58')
 plt.close()
 print("Saved plot")
+"""
+
+#Unit 2.B Practice Problems

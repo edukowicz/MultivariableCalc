@@ -2,6 +2,7 @@ import math
 import sympy
 import numpy as np
 import matplotlib.pyplot as plt
+import re
 
 #funtion "vector_operation" takes in two vectors -- a and b -- and an operation "add" or "subtract"
 def vector_operation(vec1, vec2, operation):
@@ -642,19 +643,61 @@ def evaluate_expression_at_values(expr_str, values):
     return float(result)
 
 
-def partial_derivative_as_string(expr_str, var='x'):
+def gradient_vector(expr_str):
     """
-    Takes a string representing a mathematical expression and returns
-    a string representing its partial derivative with respect to the specified variable.
+    Returns the gradient vector (as a list of partial derivatives) for a multivariable equation
+    given as a string. Assumes variables are lowercase letters and appear in the equation.
+    Uses the provided function derivative_as_string(expr_str, var).
 
-    Args:
-        expr_str (str): The mathematical expression (e.g., "sin(x*y) + x**2").
-        var (str): The variable to differentiate with respect to. Default is 'x'.
+    Parameters:
+        expr_str (str): The multivariable equation as a string
 
     Returns:
-        str: The string of the partial derivative.
+        gradient (list): The gradient vector as a list of strings (partial derivatives)
     """
-    symbols = sympy.symbols(var)
-    expr = sympy.sympify(expr_str)
-    deriv = sympy.diff(expr, symbols)
-    return str(deriv)
+
+    # Find all unique variables by regex (e.g., 'a', 'b', ... 'z') but not numbers or function names
+    # We use word boundaries to avoid matching sin, cos, etc.
+    # Matches single lowercase letter not preceded or followed by letter (naive but simple)
+    variables = sorted(set(re.findall(r'\b([a-z])\b', expr_str)))
+
+    gradient = []
+    for var in variables:
+        grad_component = derivative_as_string(expr_str, var)
+        gradient.append(grad_component)
+    return gradient
+
+
+def evaluate_mv_vector(vector_expr_strings, values):
+    """
+    Evaluates a vector-valued function at given variable values.
+
+    Args:
+        vector_expr_strings (list of str): List of expression strings for each component.
+        values (dict): Dictionary mapping variable names to their values.
+
+    Returns:
+        list: Numerical values representing the evaluated vector.
+    """
+    return [evaluate_expression_at_values(expr_str, values) for expr_str in vector_expr_strings]
+
+
+def directional_derivative(gradient_vector, unit_vector, variable_values):
+    """
+    Computes the directional derivative of a multivariable function.
+
+    Parameters:
+        gradient_vector (list): List of strings representing gradient components (partial derivatives)
+        unit_vector (list): List of numbers representing the unit vector direction
+        variable_values (list): List of numbers representing the point (variable values for evaluation)
+
+    Returns:
+        float: Directional derivative value
+    """
+
+    # Use the provided evaluate_mv_vector function
+    grad_evaluated = evaluate_mv_vector(gradient_vector, variable_values)
+
+    # Compute dot product with the unit vector
+    directional_deriv = sum(g * u for g, u in zip(grad_evaluated, unit_vector))
+    return directional_deriv
