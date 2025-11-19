@@ -4,6 +4,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import re
 
+# default locals for sympy.sympify so common constants map to numeric values
+SYMPY_DEFAULTS = {
+    'e': sympy.E,
+    'E': sympy.E,
+    'pi': sympy.pi,
+    'ln': sympy.log,
+}
+
 #funtion "vector_operation" takes in two vectors -- a and b -- and an operation "add" or "subtract"
 def vector_operation(vec1, vec2, operation):
  
@@ -63,7 +71,7 @@ def derivative_as_string(expr_str, var='x'):
         str: The string of the derivative.
     """
     x = sympy.symbols(var)
-    expr = sympy.sympify(expr_str)
+    expr = sympy.sympify(expr_str, locals=SYMPY_DEFAULTS)
     deriv = sympy.diff(expr, x)
     return str(deriv)
 
@@ -82,7 +90,7 @@ def antiderivative_as_string(expr_str, var='x'):
         str: The string of the antiderivative (without the constant of integration).
     """
     x = sympy.symbols(var)
-    expr = sympy.sympify(expr_str)
+    expr = sympy.sympify(expr_str, locals=SYMPY_DEFAULTS)
     anti = sympy.integrate(expr, x)
     return str(anti)
 
@@ -103,7 +111,7 @@ def definite_integral_as_string(expr_str, lower, upper, var='x'):
         str: The string of the definite integral result.
     """
     x = sympy.symbols(var)
-    expr = sympy.sympify(expr_str)
+    expr = sympy.sympify(expr_str, locals=SYMPY_DEFAULTS)
     definite_integral = sympy.integrate(expr, (x, lower, upper))
     return str(definite_integral)
 
@@ -122,7 +130,7 @@ def evaluate_expression_at_value(expr_str, value, var='x'):
         float: The result of the evaluated expression at the given value.
     """
     x = sympy.symbols(var)
-    expr = sympy.sympify(expr_str)
+    expr = sympy.sympify(expr_str, locals=SYMPY_DEFAULTS)
     result = expr.subs(x, value)
     return float(result)
 
@@ -145,7 +153,7 @@ def mv_function_integral(expr_list, var_list, int_var):
     variables = sympy.symbols(var_list) 
     integrals = [] 
     for expr_str in expr_list: 
-        expr = sympy.sympify(expr_str) 
+        expr = sympy.sympify(expr_str, locals=SYMPY_DEFAULTS) 
         integral = sympy.integrate(expr, sympy.Symbol(int_var)) 
         integrals.append(integral) 
     return integrals 
@@ -170,7 +178,7 @@ def mv_function_definite_integral(expr_list, var_list, int_var, lower_limit, upp
     variables = sympy.symbols(var_list) 
     definite_integrals = [] 
     for expr_str in expr_list: 
-        expr = sympy.sympify(expr_str) 
+        expr = sympy.sympify(expr_str, locals=SYMPY_DEFAULTS) 
         definite_integral = sympy.integrate(expr, (sympy.Symbol(int_var), lower_limit, upper_limit)) 
         definite_integrals.append(definite_integral.evalf()) 
     return definite_integrals 
@@ -205,7 +213,7 @@ def symbolic_vector_magnitude(vector, var_name='x'):
         sympy expression: Symbolic magnitude (can be further evaluated).
     """
     var = sympy.symbols(var_name)
-    comp_exprs = [sympy.sympify(comp) for comp in vector]
+    comp_exprs = [sympy.sympify(comp, locals=SYMPY_DEFAULTS) for comp in vector]
     magnitude = sympy.sqrt(sum(comp**2 for comp in comp_exprs))
     return magnitude
 
@@ -213,7 +221,7 @@ def vector_derivative(vector_func, var):
     x = sympy.symbols(var)
     derivatives = []
     for func_str in vector_func:
-        func = sympy.sympify(func_str)       # Convert string to sympy expression
+        func = sympy.sympify(func_str, locals=SYMPY_DEFAULTS)       # Convert string to sympy expression
         deriv = sympy.diff(func, x)          # Differentiate with respect to var
         derivatives.append(str(deriv)) # Convert back to string
     return derivatives
@@ -243,7 +251,7 @@ def vector_evaluate_expression_at_value(expr_str, value, var='x'):
     x = sympy.symbols(var)
     result = []
     for i in range(len(expr_str)):
-        expr = sympy.sympify(expr_str[i])
+        expr = sympy.sympify(expr_str[i], locals=SYMPY_DEFAULTS)
         result.append(expr.subs(x, value))
     return result
 
@@ -253,8 +261,8 @@ def cross_product_str_to_str(vec1: list[str], vec2: list[str]) -> list[str]:
         raise ValueError("Both input vectors must have exactly 3 components.")
 
     # Convert input strings to sympy expressions
-    v1 = [sympy.sympify(e) for e in vec1]
-    v2 = [sympy.sympify(e) for e in vec2]
+    v1 = [sympy.sympify(e, locals=SYMPY_DEFAULTS) for e in vec1]
+    v2 = [sympy.sympify(e, locals=SYMPY_DEFAULTS) for e in vec2]
 
     # Cross product
     cp_x = v1[1]*v2[2] - v1[2]*v2[1]
@@ -636,8 +644,8 @@ def evaluate_expression_at_values(expr_str, values):
     Returns:
         float: The result of the evaluated expression at the given values.
     """
-    # Parse the expression into sympy
-    expr = sympy.sympify(expr_str)
+    # Parse the expression into sympy (map common constants like 'e' -> Euler's number)
+    expr = sympy.sympify(expr_str, locals=SYMPY_DEFAULTS)
     # Substitute the provided variable values into the expression
     result = expr.subs(values)
     return float(result)
@@ -656,10 +664,20 @@ def gradient_vector(expr_str):
         gradient (list): The gradient vector as a list of strings (partial derivatives)
     """
 
-    # Find all unique variables by regex (e.g., 'a', 'b', ... 'z') but not numbers or function names
-    # We use word boundaries to avoid matching sin, cos, etc.
-    # Matches single lowercase letter not preceded or followed by letter (naive but simple)
-    variables = sorted(set(re.findall(r'\b([a-z])\b', expr_str)))
+    # Accept a single-item list/tuple containing the expression
+    if isinstance(expr_str, (list, tuple)):
+        if len(expr_str) == 1:
+            expr_str = expr_str[0]
+        else:
+            raise TypeError("gradient_vector expects a single scalar expression (string) or a single-item list/tuple")
+
+    # Sympify using SYMPY_DEFAULTS so that common constants (like 'e') are treated
+    # as SymPy constants (E, pi) rather than free symbols.
+    expr = sympy.sympify(expr_str, locals=SYMPY_DEFAULTS)
+
+    # Use SymPy's free_symbols to find actual variable symbols present in the expression.
+    vars_symbols = sorted(expr.free_symbols, key=lambda s: str(s))
+    variables = [str(s) for s in vars_symbols]
 
     gradient = []
     for var in variables:
@@ -695,8 +713,15 @@ def directional_derivative(gradient_vector, unit_vector, variable_values):
         float: Directional derivative value
     """
 
-    # Use the provided evaluate_mv_vector function
-    grad_evaluated = evaluate_mv_vector(gradient_vector, variable_values)
+    # Allow `variable_values` to be either a dict (mapping variable names to values)
+    # or a list/tuple of values (ordered to match the variables present in the gradient).
+    if isinstance(variable_values, dict):
+        values_dict = variable_values
+    else:
+        raise TypeError("variable_values must be a dict or a list/tuple of values")
+
+    # Use the provided evaluate_mv_vector function with a dict mapping
+    grad_evaluated = evaluate_mv_vector(gradient_vector, values_dict)
 
     # Compute dot product with the unit vector
     directional_deriv = sum(g * u for g, u in zip(grad_evaluated, unit_vector))

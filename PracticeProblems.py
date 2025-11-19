@@ -458,3 +458,141 @@ print("Saved plot")
 """
 
 #Unit 2.B Practice Problems
+
+#Page 955, Problem #1
+print("Page 955, Problem #1")
+eq = "3*x**3*y**2"
+a = calc.derivative_as_string(eq, 'x')
+print(a)
+b = calc.derivative_as_string(eq, 'y')
+print(b)
+c = calc.derivative_as_string(eq, 'x')
+expr = sympy.sympify(c)
+ca = expr.subs({'x':1})
+print(ca)
+d = calc.derivative_as_string(eq, 'x')
+expr = sympy.sympify(d)
+da = expr.subs({'y':1})
+print(da)
+e = calc.derivative_as_string(eq, 'y')
+expr = sympy.sympify(e)
+ea = expr.subs({'x':1})
+print(ea)
+f = calc.derivative_as_string(eq, 'y')
+expr = sympy.sympify(f)
+fa = expr.subs({'y':1})
+print(fa)
+g = calc.derivative_as_string(eq, 'x')
+ga = calc.evaluate_expression_at_values(g, {'x':1,'y':2})
+print(ga)
+h = calc.derivative_as_string(eq, 'y')
+ha = calc.evaluate_expression_at_values(h, {'x':1,'y':2})
+print(ha)
+
+#Page 955, Problem #5
+print("Page 955, Problem #5")
+z = "sin(y**2 - 4*x)"
+a = calc.derivative_as_string(z, 'x')
+aa = calc.evaluate_expression_at_values(a, {'x':2,'y':1})
+print(aa)
+b = calc.derivative_as_string(z, 'y')
+bb = calc.evaluate_expression_at_values(b, {'x':2,'y':1})
+print(bb)
+
+#Page 955, Problem #13
+print("Page 955, Problem #13")
+z = "4*e**(x**2*y**3)"
+dzdx = calc.derivative_as_string(z, 'x')
+print("dzdx")
+print(dzdx)
+dzdy = calc.derivative_as_string(z, 'y')
+print("dzdy")
+print(dzdy)
+
+#Page 955, Problem #15
+print("Page 955, Problem #15")
+z = "x**3*ln(1 + x*y**(-3/5))"
+dzdx = calc.derivative_as_string(z, 'x')
+print("dzdx")
+print(dzdx)
+dzdy = calc.derivative_as_string(z, 'y')
+print("dzdy")
+print(dzdy)
+
+#Page 955, Problem #35
+print("Page 955, Problem #35")
+w = "y*e**z*sin(x*z)"
+dwdx = calc.derivative_as_string(w, 'x')
+print("dwdx")
+print(dwdx)
+dwdy = calc.derivative_as_string(w, 'y')
+print("dwdy")
+print(dwdy)
+dwdz = calc.derivative_as_string(w, 'z')
+print("dwdz")
+print(dwdz)
+
+#Page 987, Problem #9
+print("Page 987, Problem #9")
+z = "4*x**3*y**2"
+u = [4, -3]
+grad = calc.gradient_vector(z)
+unit = calc.unit_vector(u)
+directionalderiv = calc.directional_derivative(grad, unit, {'x':2, 'y':1})
+print(directionalderiv)
+
+#Page 987, Problem #11
+print("Page 987, Problem #11")
+z = "y**2*ln(x)"
+u = [-3, 3]
+grad = calc.gradient_vector(z)
+unit = calc.unit_vector(u)
+directionalderiv = calc.directional_derivative(grad, unit, {'x':1, 'y':4})
+print(directionalderiv)
+
+#Page 987, Problem #15
+print("Page 987, Problem #15")
+w = "x**3*z - y*x**2 + z**2"
+u = [3, -1, 2]
+grad = calc.gradient_vector(w)
+unit = calc.unit_vector(u)
+directionalderiv = calc.directional_derivative(grad, unit, {'x':2, 'y':-1, 'z':1})
+print(directionalderiv)
+
+#Page 987, Problem #33
+print("Page 987, Problem #33")
+z = "4*x - 8*y"
+grad = calc.gradient_vector(z)
+print(grad)
+
+#Page 987, Problem #35
+print("Page 987, Problem #33")
+w = "ln((x**2 + y**2 + z**2)**0.5)"
+grad = calc.gradient_vector(w)
+print(grad)
+
+#Page 987, Problem #37
+print("Page 987, Problem #37")
+z = "(x**2 + x*y)**3"
+grad = calc.gradient_vector(z)
+gradeval = calc.evaluate_mv_vector(grad, {'x':-1, 'y':-1})
+print(gradeval)
+
+#Page 987, Problem #39
+print("Page 987, Problem #39")
+w = "y*ln(x+y+z)"
+grad = calc.gradient_vector(w)
+gradeval = calc.evaluate_mv_vector(grad, {'x':-3, 'y':4, 'z':0})
+print(gradeval)
+
+#Page 987, Problem #69
+print("Page 987, Problem #69")
+v = "e**(-2*x)*cos(2*y)"
+egrad = calc.gradient_vector(v)
+e = []
+for eq in egrad:
+    eq = eq.strip()
+    e.append(f"-({eq})")
+# Provide Euler's number for 'e' so the expression becomes numeric
+eeval = calc.evaluate_mv_vector(e, {'x':(math.pi)/4, 'y':0})
+print(eeval)
